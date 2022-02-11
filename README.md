@@ -8,6 +8,9 @@
 ## Installation
 
 ```console
+# It depends on fzf
+$ brew install fzf
+
 $ brew install KeisukeYamashita/tap/gclctx
 ```
 
