@@ -5,6 +5,32 @@
 
 > Fast gcloud account switcher
 
+## Installation
+
+```console
+$ brew install KeisukeYamashita/tap/gclctx
+```
+
+## Usage
+
+### Select an account and switch
+
+```console
+$ gctlctx
+```
+
+### Switch to an account
+
+```console
+$ gclctx my-account-2
+```
+
+### Switch back to the latest acocunt
+
+```console
+$ gctlctx
+```
+
 ## License
 
 Copyright 2022 ~ KeisukeYamashita, Inc.
