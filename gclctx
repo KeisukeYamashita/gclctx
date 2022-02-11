@@ -1,0 +1,81 @@
+#!/bin/bash
+
+GCLCTX_GCLOUD_COMMAND="${GCLCTX_GCLOUD_COMMAND:-gcloud}"
+GCLCTX_CACHE_FILE="$HOME/.gclctx"
+
+select_and_switch_account(){
+    local name
+    name=$("${GCLCTX_GCLOUD_COMMAND}" config configurations list --format="value(name)" | fzf --preview "${GCLCTX_GCLOUD_COMMAND} config configurations describe {}" )
+    if [[ -z "${name}" ]]; then
+        echo "[INFO] Stopped switching accounts"
+        return
+    fi
+
+    switch "${name}"
+}
+
+switch () {
+    local name old_name
+    name="${1}"
+
+    old_name=$("${GCLCTX_GCLOUD_COMMAND}" config configurations list --filter=is_active=true --format="value(name)")
+    "${GCLCTX_GCLOUD_COMMAND}" config configurations activate "${name}" && echo "${old_name}" > "${GCLCTX_CACHE_FILE}"
+}
+
+switch_account() {
+    local name
+    name="${1}"
+
+    if [[ "${name}" == "-" ]]; then
+        switch_back
+        return
+    fi
+
+    switch "${name}"
+}
+
+switch_back() {
+    if [[ ! -f "${GCLCTX_CACHE_FILE}" ]]; then
+        echo "[ERROR] no gclctx history found at ${GCLCTX_CACHE_FILE}" >&2
+        return
+    fi
+
+    destination=$(cat ${GCLCTX_CACHE_FILE})
+    switch "${destination}"
+}
+
+usage() {
+    cat <<EOF >&2
+Switch between gcloud accounts
+
+Usage: 
+    gclctx [account|-]
+    gclctx
+
+Arguments:
+    account: 
+        The account name to switch to
+
+    -:
+        Switch back to the latest account
+EOF
+}
+
+main() {
+    local move_back=false
+
+    if [[ $# > 1 ]]; then
+        usage
+        return 1
+    fi
+
+
+    if [[ $# -eq 1 ]]; then
+        switch_account "${1}"
+        return 
+    fi
+
+   select_and_switch_account
+}
+
+main "$@"
