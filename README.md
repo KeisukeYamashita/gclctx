@@ -3,7 +3,7 @@
 ![Latest GitHub release](https://img.shields.io/github/release/KeisukeYamashita/gclctx.svg)
 ![Proudly written in Bash](https://img.shields.io/badge/written%20in-bash-ff69b4.svg)
 
-> Power loots for gcloud
+> Fast gcloud account switcher
 
 ## License
 
