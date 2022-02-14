@@ -14,6 +14,14 @@ $ brew install fzf
 $ brew install KeisukeYamashita/tap/gclctx
 ```
 
+## Tips
+
+Add this alias!
+
+```bash
+alias gx="gctlctx"
+```
+
 ## Usage
 
 ### Select an account and switch
@@ -25,13 +33,13 @@ $ gctlctx
 ### Switch to an account
 
 ```console
-$ gclctx my-account-2
+$ gctlctx my-account-2
 ```
 
 ### Switch back to the latest acocunt
 
 ```console
-$ gctlctx
+$ gctlctx -
 ```
 
 ## License
